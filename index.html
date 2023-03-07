@@ -3,8 +3,153 @@
     <audio controls loop>
   <source src="bardenaudio.mp3" type="audio/mpeg">
 </audio>
+
+
+
     </center>
-    
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Snake Game</title>
+<style type="text/css">
+body {text-align:center;}
+canvas { border:7px dashed #4A4747 }
+h1 { font-size:35px; text-align: center; margin: 0; padding-bottom: 25px; text-decoration: underline; font-family: Geneva; color: #0520A5;}
+</style>
+<script type="text/javascript">
+function play_game()
+{
+var level = 160; // Game level, by decreasing will speed up
+var rect_w = 45; // Width
+var rect_h = 30; // Height
+var inc_score = 50; // Score
+var snake_color = "#0520A5"; // Snake Color
+var ctx; // Canvas attributes
+var tn = []; // temp directions storage
+var x_dir = [-1, 0, 1, 0]; // position adjusments
+var y_dir = [0, -1, 0, 1]; // position adjusments
+var queue = [];
+var frog = 1; // defalut food
+var map = [];
+var MR = Math.random;
+var X = 5 + (MR() * (rect_w - 10))|0; // Calculate positions
+var Y = 5 + (MR() * (rect_h - 10))|0; // Calculate positions
+var direction = MR() * 3 | 0;
+var interval = 0;
+var score = 0;
+var sum = 0, easy = 0;
+var i, dir;
+// getting play area 
+var c = document.getElementById('playArea');
+ctx = c.getContext('2d');
+// Map positions
+for (i = 0; i < rect_w; i++)
+{
+map[i] = [];
+}
+// random placement of snake food
+function random_snake()
+{
+var x, y;
+do
+{
+x = MR() * rect_w|0;
+y = MR() * rect_h|0;
+}
+while (map[x][y]);
+map[x][y] = 1;
+ctx.fillStyle = snake_color;
+ctx.strokeRect(x * 10+1, y * 10+1, 8, 8);
+}
+// Default somewhere placement
+random_snake();
+function set_game_speed()
+{
+if (easy)
+{
+X = (X+rect_w)%rect_w;
+Y = (Y+rect_h)%rect_h;
+}
+--inc_score;
+if (tn.length)
+{
+dir = tn.pop();
+if ((dir % 2) !== (direction % 2))
+{
+direction = dir;
+}
+}
+if ((easy || (0 <= X && 0 <= Y && X < rect_w && Y < rect_h)) && 2 !== map[X][Y])
+{
+if (1 === map[X][Y])
+{
+score+= Math.max(5, inc_score);
+inc_score = 50;
+random_snake();
+frog++;
+}
+//ctx.fillStyle("#ffffff");
+ctx.fillRect(X * 10, Y * 10, 9, 9);
+map[X][Y] = 2;
+queue.unshift([X, Y]);
+X+= x_dir[direction];
+Y+= y_dir[direction];
+if (frog < queue.length)
+{
+dir = queue.pop()
+map[dir[0]][dir[1]] = 0;
+ctx.clearRect(dir[0] * 10, dir[1] * 10, 10, 10);
+}
+}
+else if (!tn.length)
+{
+var show_score = document.getElementById("show");
+show_score.innerHTML = "You lose!<br /> <u>Your Score:</u> <b>"+score+"</b><br><br> Want to try again?<br><br><input type='button' value='Play Again' onclick='window.location.reload();' />";
+document.getElementById("playArea").style.display = 'none';
+window.clearInterval(interval);
+}
+}
+interval = window.setInterval(set_game_speed, level);
+document.onkeydown = function(e) {
+var code = e.keyCode - 37;
+if (0 <= code && code < 4 && code !== tn[0])
+{
+tn.unshift(code);
+}
+else if (-5 == code)
+{
+if (interval)
+{
+window.clearInterval(interval);
+interval = 0;
+}
+else
+{
+interval = window.setInterval(set_game_speed, 60);
+}
+}
+else
+{
+dir = sum + code;
+if (dir == 44||dir==94||dir==126||dir==171) {
+sum+= code
+} else if (dir === 218) easy = 1;
+}
+}
+}
+</script>
+</head>
+<body onload="play_game()">
+<h1>Play Snake Game</h1>
+<div id="show"></div>
+<canvas id="playArea" width="450" height="300">Sorry your browser does not support HTML5. Try using like Chrome or Firefox.</canvas>
+</body>
+</html>
+
+
+
+
     <center><h1>HELLO</h1>
     
     <img src="https://media.tenor.com/eWLE0P6Nsy8AAAAd/kanye-west.gif"></img>
@@ -29,53 +174,73 @@
     <h1>Engineering Journal</h1> 
 
 
-<font color=#aa00cc> <h2>9 - 2 - 22 - This week we learned how to do tinkercad. It is a 3d modeling program. I made a microwave</h2>
+<font color=#000000> <h2> <span style = "background-color:#FFFFFF"> 9 - 2 - 22 - This week we learned how to do tinkercad. It is a 3d modeling program. I made a microwave</h2>
 <img src = "Microwave.png" width = "700px" height = "500">
 
-<h2>9 - 9 - 22 - This week we started work on our Rube Goldberg tinkercad</h2>
+<h2> <span style = "background-color:#FFFFFF"> 9 - 9 - 22 - This week we started work on our Rube Goldberg tinkercad</h2>
 
-<h2>9 - 16 - 22 - Today we made boats out of paper. We then put weights on the boats and saw whos boat sunk and whose stayed afloat, but the best boat was juts a peice of paper</h2>
+<h2> <span style = "background-color:#FFFFFF"> 9 - 16 - 22 - Today we made boats out of paper. We then put weights on the boats and saw whos boat sunk and whose stayed afloat, but the best boat was juts a peice of paper</h2>
 
-<h2>9 - 23 - 22 - This week we started testing our rube goldberg projects</h2>
+<h2> <span style = "background-color:#FFFFFF"> 9 - 23 - 22 - This week we started testing our rube goldberg projects</h2>
 
 <video width="900" height="600" controls="" loop="">
     <source src="RubeVid.MOV" type="video/mp4">
 </video>
 
-<h2>9 - 30 - 22 - This week we learned about computer engineering, with that we disected a computer</h2>
+<h2> <span style = "background-color:#FFFFFF"> 9 - 30 - 22 - This week we learned about computer engineering, with that we disected a computer</h2>
  <img src = "OpenComputer.jpg" width = "700px" height = "500">
  
- <h2>10 - 7 - 22 - This week we learned about bioengineering. We then made a prothstetic for an animal, I chose an elephant</h2>
+ <h2> <span style = "background-color:#FFFFFF"> 10 - 7 - 22 - This week we learned about bioengineering. We then made a prothstetic for an animal, I chose an elephant</h2>
  <img src = "DElephant_Prostetic.png" width = "700px" height = "500">
  <img src = "elephant.png" width = "700px" height = "500">
  
- <h2>10 - 14 - 22 - This week we learned about Aerospace engineering, we also had a guest speaker come in and talk about it</h2>
+ <h2> <span style = "background-color:#FFFFFF"> 10 - 14 - 22 - This week we learned about Aerospace engineering, we also had a guest speaker come in and talk about it</h2>
  
- <h2>10 - 21 - 22 - Week we did a cad on our bottle rocket, built it, and tested it, sadly i was at the doctors so I wasn't able to see our rocket get tested</h2>
+ <h2> <span style = "background-color:#FFFFFF"> 10 - 21 - 22 - Week we did a cad on our bottle rocket, built it, and tested it, sadly i was at the doctors so I wasn't able to see our rocket get tested</h2>
  
-  <h2>10 - 28 - 22 - This week we learnt about bioengineering, we then did a water filtration lab, where we put cotton, sand, small rocks, and big rocks in order to filter out contaminated water</h2>
+  <h2> <span style = "background-color:#FFFFFF"> 10 - 28 - 22 - This week we learnt about bioengineering, we then did a water filtration lab, where we put cotton, sand, small rocks, and big rocks in order to filter out contaminated water</h2>
     <img src = "waterfilter.jpg" width = "700px" height = "500">
 
-<h2>11 - 4 - 22 - This week we started electrical engineering and worked on circuits online via tinkercad </h2>
+<h2> <span style = "background-color:#FFFFFF"> 11 - 4 - 22 - This week we started electrical engineering and worked on circuits online via tinkercad </h2>
 
-<h2>11 - 11 - 22 - We worked with bread boards and other resources to make leds light up</h2>
+<h2> <span style = "background-color:#FFFFFF"> 11 - 11 - 22 - We worked with bread boards and other resources to make leds light up</h2>
     <img src = "breadled.jpg" width = "700px" height = "500">
  
- <h2>11 - 18 - 22 - I was absent this week so I have no clue what we did</h2>
+ <h2> <span style = "background-color:#FFFFFF"> 11 - 18 - 22 - I was absent this week so I have no clue what we did</h2>
  
- <h2>11 - 25 - 22 - Thanksgiving break </h2>
+ <h2> <span style = "background-color:#FFFFFF"> 11 - 25 - 22 - Thanksgiving break </h2>
  <img src="https://metro.co.uk/wp-content/uploads/2016/11/midcenturymenu.jpg?quality=90&strip=all"></img>
  <h1>YUMMY FOOD </h1>
  
-<h2>12 - 2 - 22 - I was also absent basically this entire week so have no clue what we did</h2>
+<h2> <span style = "background-color:#FFFFFF"> 12 - 2 - 22 - I was also absent basically this entire week so have no clue what we did</h2>
   
-<h2>12 - 9 - 22 - My group started working on a spaghetti bridge last week when I was absent, when I came back it was terrible and we decided to start fresh. We went for a more visually appealing design with supports on top of the bridge. </h2>
+<h2> <span style = "background-color:#FFFFFF"> 12 - 9 - 22 - My group started working on a spaghetti bridge last week when I was absent, when I came back it was terrible and we decided to start fresh. We went for a more visually appealing design with supports on top of the bridge. </h2>
     <img src = "bridgev1.jpg" width = "700px" height = "500"> 
     
-<h2>12 - 16 - 22 - After we tested our bridge we noticed a few flaws. The ends were too weak and the middle needed more support. To fix these problems in our new bridge we added a cross design on the end. And then we added 4 more support poles on the top to create our final bridge.</h2>
+<h2> <span style = "background-color:#FFFFFF"> 12 - 16 - 22 - After we tested our bridge we noticed a few flaws. The ends were too weak and the middle needed more support. To fix these problems in our new bridge we added a cross design on the end. And then we added 4 more support poles on the top to create our final bridge.</h2>
      <img src = "bridgev2.jpg" width = "700px" height = "500"> 
     
-<h2>12 - 21 - 22 - Finals week. We finally tested our bridge today. It went terrible, the empty bucket broke the bridge.</h2>    
+<h2> <span style = "background-color:#FFFFFF">12 - 21 - 22 - Finals week. We finally tested our bridge today. It went terrible, the empty bucket broke the bridge.</h2>    
+    
+    
+ <img src="https://media0.giphy.com/media/zytK3gV50C11QXZ3Zb/giphy.gif" width = "1000px" height = "1000px">
+
+<h1> </h1>
+<h1> </h1>
+<h2> <span style = "background-color:#FFFFFF"> 1 - 13 - 23 - This was the first week of the new school year. We learned about new ways of Engineering, we learned about hypertrains and other big projects. </h2>
+<h2> <span style = "background-color:#FFFFFF"> 1 - 20 - 23 - Second week of the new semester and we learned about chemical engineering.</h2>
+<h1> </h1>
+<h1> </h1>
+<h1>ARDUINO CAR PROJECT</h1>
+<h1> </h1>
+<h1> </h1>
+<h2> <span style = "background-color:#FFFFFF"> 1 - 22 - 23 >>> 3 - 3 - 23  -  This time period consisted of our arduino car project. In this project we had to create a functioning car with an arduino and motors. It took a while and a lot of restarting but we finally got the car to run. But due to me be absent for a lot of days we didn have enough time to add the bluetooh module in order to control the car. So in the end of the project we had a functioning car but we were unable to control it due to not enough time. This project was a lot of fun and I learned a lot about arduinos and wiring. In the final week we tested out our cars out in the cafeteria.  </h2>
+<video width="900" height="600" controls="" loop="">
+    <source src="Arduino.Car.MOV" type="video/mp4">
+</video>
+ <img src = "ArduinoCar.jpg" width = "500px" height = "600"> 
+    
+    
     
 </center>
 
